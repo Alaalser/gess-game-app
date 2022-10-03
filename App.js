@@ -6,21 +6,26 @@ import GameScreen from './screens/GameScreen';
 import StartGameScreen from './screens/StartGameScreen';
 import GameOverScreen from './screens/GameOverScreen';
 
-
 export default function App() {
-  const [userNumber, setUserNumber] = useState();
+  const [userNumber, setUserNumber] = useState('');
+
+  const [gameOver, setGameOver] = useState(false);
 
   const switchScreenHandler = (selectedNumber) => {
     setUserNumber(selectedNumber);
   };
 
+  const gameOverHandler = () => {
+    setGameOver(true);
+  };
+
   let screen = <StartGameScreen onStartGame={switchScreenHandler} />;
 
   if (userNumber) {
-    screen = <GameScreen userChoice={userNumber} />;
+    screen = <GameScreen userChoice={userNumber} onGameOver={gameOverHandler} />;
   }
 
-  if (userNumber) {
+  if (gameOver && userNumber) {
     screen = <GameOverScreen />;
   }
 
